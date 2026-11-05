@@ -1,0 +1,446 @@
+/* ==========================================================
+   1. Переменные: цвета, стекло, шрифт, отступы
+   ========================================================== */
+:root {
+  /* Фон и текст */
+  --color-bg: #0B1426;              /* глубокий ночной синий */
+  --color-text: #E8EEF7;            /* основной светлый текст */
+  --color-muted: #9FB0C7;           /* приглушённый серо-голубой */
+  --color-dark-text: #04121F;       /* тёмный текст на яркой кнопке */
+
+  /* Акценты */
+  --color-accent: #2DD4BF;          /* бирюзовый */
+  --color-accent-2: #38BDF8;        /* голубой */
+  --color-accent-glow: rgba(45, 212, 191, 0.35);
+
+  /* Пятна на фоне */
+  --blob-teal: rgba(45, 212, 191, 0.28);
+  --blob-blue: rgba(56, 189, 248, 0.22);
+  --blob-peach: rgba(251, 168, 122, 0.16);
+  --blob-blur: 60px;
+
+  /* Жидкое стекло */
+  --glass-bg: rgba(16, 28, 52, 0.55);           /* полупрозрачная тёмная подложка */
+  --glass-bg-fallback: rgba(18, 30, 56, 0.94);  /* плотный фон без backdrop-filter */
+  --glass-border: rgba(255, 255, 255, 0.12);    /* тонкая светлая рамка */
+  --glass-highlight: rgba(255, 255, 255, 0.22); /* блик по верхней кромке */
+  --glass-blur: 18px;
+  --glass-saturate: 160%;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+
+  /* Подложка чередующихся секций */
+  --section-alt-bg: rgba(255, 255, 255, 0.025);
+
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius: 16px;
+  --gutter: 20px;
+  --section-space: 64px;
+}
+
+/* ==========================================================
+   2. Базовые правила
+   ========================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;               /* тёмные полосы прокрутки и поля браузера */
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* Цветные размытые пятна: лежат под всем содержимым и не прокручиваются */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 18%, var(--blob-teal), transparent 38%),
+    radial-gradient(circle at 88% 32%, var(--blob-blue), transparent 36%),
+    radial-gradient(circle at 70% 88%, var(--blob-peach), transparent 34%);
+  filter: blur(var(--blob-blur));
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ==========================================================
+   3. Жидкое стекло — одно общее правило
+   ========================================================== */
+.site-header,
+.card,
+.offer,
+.step::before {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),   /* блик по верхней кромке */
+    var(--glass-shadow);                     /* мягкая тень под стеклом */
+}
+
+/* Запасной вариант: браузер не умеет размывать фон — делаем подложку плотнее */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header,
+  .card,
+  .offer,
+  .step::before {
+    background: var(--glass-bg-fallback);
+  }
+}
+
+/* ==========================================================
+   4. Контейнер
+   ========================================================== */
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ==========================================================
+   5. Шапка: прилипает к верху
+   ========================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 18px 0;
+  border-width: 0 0 1px;            /* у шапки рамка только снизу */
+  border-radius: 0;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+/* ==========================================================
+   6. «Жидкая» кнопка
+   ========================================================== */
+.button {
+  position: relative;
+  isolation: isolate;               /* блик ::before остаётся под текстом */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+  color: var(--color-dark-text);
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 8px 28px var(--color-accent-glow);
+  transition: box-shadow 0.2s ease;
+}
+
+/* Глянцевый блик в верхней половине */
+.button::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.05));
+  pointer-events: none;
+}
+
+.button:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 10px 36px rgba(45, 212, 191, 0.5);
+}
+
+/* ==========================================================
+   7. Первый экран
+   ========================================================== */
+.hero {
+  padding: 56px 0 var(--section-space);
+}
+
+.hero__title {
+  font-size: 34px;
+  font-weight: 700;
+  max-width: 18ch;
+}
+
+.hero__lead {
+  margin-top: 20px;
+  margin-bottom: 32px;
+  font-size: 19px;
+  color: var(--color-muted);
+  max-width: 36em;
+}
+
+/* ==========================================================
+   8. Секции
+   ========================================================== */
+.section {
+  padding: var(--section-space) 0;
+}
+
+.section--alt {
+  background: var(--section-alt-bg);
+}
+
+.section__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+/* ==========================================================
+   9. Карточки (стекло — из общего правила)
+   ========================================================== */
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+  border-radius: var(--radius);
+}
+
+.card__title {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.card__text {
+  color: var(--color-muted);
+}
+
+.card__label {
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-muted);
+  padding: 4px 10px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+}
+
+.card__link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-weight: 600;
+}
+
+/* ==========================================================
+   10. Шаги: стеклянные кружки с ярким кольцом
+   ========================================================== */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 28px;
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  padding-left: 60px;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);   /* яркое кольцо поверх общей рамки */
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    0 0 16px var(--color-accent-glow);
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.step__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.step__text {
+  color: var(--color-muted);
+}
+
+/* ==========================================================
+   11. Блок «Первым клиентам» (стекло — из общего правила)
+   ========================================================== */
+.offer {
+  padding: 28px 24px;
+  border-radius: var(--radius);
+  border-left: 3px solid var(--color-accent);
+}
+
+.offer__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.offer__text {
+  font-size: 19px;
+  max-width: 40em;
+}
+
+/* ==========================================================
+   12. Контакт и подвал
+   ========================================================== */
+.contact {
+  border-top: 1px solid var(--glass-border);
+}
+
+.contact .section__title {
+  margin-bottom: 12px;
+}
+
+.contact__text {
+  margin-bottom: 28px;
+  color: var(--color-muted);
+}
+
+.site-footer {
+  padding: 28px 0;
+  font-size: 15px;
+  color: var(--color-muted);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ==========================================================
+   13. Планшеты и компьютеры (от 768px)
+   ========================================================== */
+@media (min-width: 768px) {
+  :root {
+    --gutter: 40px;
+    --section-space: 96px;
+  }
+
+  .button {
+    display: inline-flex;
+    width: auto;
+  }
+
+  .hero {
+    padding: 112px 0 var(--section-space);
+  }
+
+  .hero__title {
+    font-size: 52px;
+  }
+
+  .hero__lead {
+    font-size: 21px;
+  }
+
+  .section__title {
+    font-size: 36px;
+    margin-bottom: 44px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .card {
+    padding: 32px 28px;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 48px;
+  }
+
+  .offer {
+    padding: 44px 48px;
+  }
+
+  .offer__title {
+    font-size: 30px;
+  }
+}
+
+/* ==========================================================
+   14. Широкие экраны (от 1024px)
+   ========================================================== */
+@media (min-width: 1024px) {
+  .hero__title {
+    font-size: 60px;
+  }
+
+  .steps {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+
+  .step {
+    padding-left: 0;
+    padding-top: 64px;
+  }
+}
+
+/* Уважаем настройку «уменьшить движение» */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

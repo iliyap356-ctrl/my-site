@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Основное для поиска и вкладки браузера -->
+  <title>Илья — сайты для мастеров, салонов и кафе</title>
+  <meta name="description" content="Делаю понятные сайты для малого бизнеса: онлайн-запись, меню, заявки прямо в Telegram. Первую версию показываю через 5 дней.">
+
+  <!-- Open Graph: превью ссылки в Telegram, WhatsApp, VK -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Илья — сайты для мастеров, салонов и кафе">
+  <meta property="og:description" content="Понятные сайты для малого бизнеса: онлайн-запись, меню, заявки в Telegram. Первая версия через 5 дней.">
+  <meta property="og:url" content="https://YOUR-SITE.netlify.app/">
+  <meta property="og:image" content="https://YOUR-SITE.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Шрифт Inter с кириллицей -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Шапка: только имя -->
+  <header class="site-header">
+    <div class="container">
+      <span class="logo">Илья</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 1. Первый экран -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero__title">Сайты для мастеров, салонов и кафе, которые приносят заявки</h1>
+        <p class="hero__lead">Делаю понятные сайты для малого бизнеса: онлайн-запись, меню, заявки прямо в Telegram. Первую версию показываю через 5 дней.</p>
+        <a class="button" href="https://t.me/BROODSC0E" target="_blank" rel="noopener">Написать в Telegram</a>
+      </div>
+    </section>
+
+    <!-- 2. Услуги -->
+    <section class="section" id="services">
+      <div class="container">
+        <h2 class="section__title">Что я делаю</h2>
+        <ul class="cards">
+          <li class="card">
+            <h3 class="card__title">Лендинг под заявки</h3>
+            <p class="card__text">Клиент сразу видит, что вы предлагаете и сколько это стоит, и оставляет заявку, а не уходит к конкуренту.</p>
+          </li>
+          <li class="card">
+            <h3 class="card__title">Сайт с онлайн-записью</h3>
+            <p class="card__text">Клиенты записываются сами в любое время, а вы перестаёте терять их в переписках и звонках.</p>
+          </li>
+          <li class="card">
+            <h3 class="card__title">Сайт с меню или каталогом</h3>
+            <p class="card__text">Цены и позиции вы меняете сами за пару минут, без программиста и без устаревшего меню на сайте.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Как проходит работа -->
+    <section class="section section--alt" id="process">
+      <div class="container">
+        <h2 class="section__title">Как проходит работа</h2>
+        <ol class="steps">
+          <li class="step">
+            <h3 class="step__title">Созвон на 15 минут</h3>
+            <p class="step__text">Узнаю о вашем деле, клиентах и задаче сайта.</p>
+          </li>
+          <li class="step">
+            <h3 class="step__title">Структура и тексты</h3>
+            <p class="step__text">Присылаю план страницы и тексты на согласование.</p>
+          </li>
+          <li class="step">
+            <h3 class="step__title">Сайт по ссылке за 5–7 дней</h3>
+            <p class="step__text">Показываю готовую версию и вношу две волны правок.</p>
+          </li>
+          <li class="step">
+            <h3 class="step__title">Запуск</h3>
+            <p class="step__text">Подключаю домен и форму заявок, даю инструкцию по сайту.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 4. Первым клиентам -->
+    <section class="section" id="offer">
+      <div class="container">
+        <div class="offer">
+          <h2 class="offer__title">Первым клиентам</h2>
+          <p class="offer__text">Я только начинаю брать заказы, поэтому первым трём клиентам — скидка&nbsp;30%. Взамен прошу честный отзыв и разрешение показать сайт в портфолио.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Примеры работ (скрыт). Чтобы включить — удалите слово hidden в строке ниже -->
+    <section class="section section--alt" id="works" hidden>
+      <div class="container">
+        <h2 class="section__title">Примеры работ</h2>
+        <ul class="cards">
+          <li class="card">
+            <span class="card__label">Учебный концепт</span>
+            <h3 class="card__title">Название проекта</h3>
+            <p class="card__text">Короткое описание: для кого сайт и какую задачу решает.</p>
+            <a class="card__link" href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+          </li>
+          <li class="card">
+            <span class="card__label">Учебный концепт</span>
+            <h3 class="card__title">Название проекта</h3>
+            <p class="card__text">Короткое описание: для кого сайт и какую задачу решает.</p>
+            <a class="card__link" href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+          </li>
+          <li class="card">
+            <span class="card__label">Учебный концепт</span>
+            <h3 class="card__title">Название проекта</h3>
+            <p class="card__text">Короткое описание: для кого сайт и какую задачу решает.</p>
+            <a class="card__link" href="#" target="_blank" rel="noopener">Посмотреть сайт</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. Контакт -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <h2 class="section__title">Обсудим ваш сайт?</h2>
+        <p class="contact__text">Отвечаю в течение дня.</p>
+        <a class="button" href="https://t.me/BROODSC0E" target="_blank" rel="noopener">Написать в Telegram</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year">2026</span>, Илья</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
